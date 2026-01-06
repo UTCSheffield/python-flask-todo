@@ -29,7 +29,7 @@ def logout():
     if is_codespaces() or is_render():
         return redirect(url_for('auth0.logout_auth0'))
     else:
-        return redirect(url_for('github_auth.logout_github'))   
+        return redirect(url_for('github_auth.logout_github'))
 
 
 def get_current_user():

@@ -1,5 +1,6 @@
 import os
-from flask import Blueprint, session, redirect, render_template, url_for, request
+from flask import Blueprint, session, redirect, \
+    render_template, url_for, request
 from urllib.parse import urlencode
 import requests
 
@@ -8,7 +9,8 @@ auth0_bp = Blueprint('auth0', __name__)
 auth0_domain = os.getenv("AUTH0_DOMAIN")
 auth0_client_id = os.getenv("AUTH0_CLIENT_ID")
 auth0_client_secret = os.getenv("AUTH0_CLIENT_SECRET")
-auth0_callback_url = os.getenv("AUTH0_CALLBACK_URL", "http://localhost:5000/callback")
+auth0_callback_url = os.getenv("AUTH0_CALLBACK_URL",
+                               "http://localhost:5000/callback")
 auth0_base_url = f"https://{auth0_domain}"
 auth0_authorize_url = f"{auth0_base_url}/authorize"
 auth0_token_url = f"{auth0_base_url}/oauth/token"
