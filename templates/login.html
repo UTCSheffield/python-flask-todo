@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block title %}Log In{% endblock %}
 {% block main %}
-    <a href="/login/github">Login with GitHub</a><br>
-    <!-- <a href="/login/google">Login with Google</a> -->
+    <!-- Current authentication provider: {{ auth_provider }} -->
+    <a href="/login">Login</a><br>
 {% endblock %}
