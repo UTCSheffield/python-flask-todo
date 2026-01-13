@@ -45,6 +45,8 @@ if 'RENDER_EXTERNAL_HOSTNAME' in os.environ:
 else:
     auth0_callback_url = os.environ.get('AUTH0_CALLBACK_URL', 'http://localhost:5000/callback')
 
+app.config['AUTH0_CALLBACK_URL'] = auth0_callback_url
+
 # Use auth0_callback_url in your Auth0 configuration
 
 if __name__ == '__main__':
