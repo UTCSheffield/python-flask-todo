@@ -1,12 +1,15 @@
-# Flask Todo App with Dual Authentication
+# Flask Todo App Starter
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![Flask](https://img.shields.io/badge/Flask-2.3-green)
 ![Render](https://img.shields.io/badge/Deploy-Render-purple)
 
 ## Features
-
+<!--
 - Flask + SQLAlchemy ORM
+   - Webserver with SQL Database 
+   - Managed by an Object Relationship Manager which allows you to write classes that define the data
+   - Jinja templates 
 - **Dual Authentication:**
   - GitHub OAuth (Flask-Dance) for local Windows development
   - Auth0 OAuth for Codespaces and Render production
@@ -14,16 +17,25 @@
 - SQLite (easy to switch to PostgreSQL)
 - Ready for Render deployment
 - GitHub Actions CI/CD
-
+-->
 ### Flask
+   - Webserver with routing (a function for each url endpoint)
+   - Jinja templates for looping though and outputting data.
+   - todo.py contains the endpoints for the Todo app
 
-### SQLAlchemy & SQLite
+### SQLAlchemy & SQLite / PostgreSQL
+   - SQL Database 
+   - Managed by SQLAlchemy an Object Relationship Manager which allows you to write classes that define the data and provides the storage & CRUD for you.
+   - ORMs build the database for you from your classes, start with SQLite but you can move PostgreSQL or others when you are ready.
+   - todo.py includes the Todo class that provdes all you need for the building of the database and all the CRUD. 
 
 ### Authentication (GitHub + Auth0)
+  - GitHub OAuth (Flask-Dance) for local Windows development
+  - Auth0 OAuth for Codespaces and Render production
 
-### Render
-
-### Github Actions
+### Render & Github Actions
+- Ready for Render deployment
+- GitHub Actions CI/CD
 
 ## Setup
 
@@ -137,6 +149,12 @@ The database file is stored in `/instance/todo.db`
 - Storing any user data in a database (other than an id from github ). To have users on this system to store any other PII refer to [https://flask-dance.readthedocs.io/en/latest/storages.html#sqlalchemy](https://flask-dance.readthedocs.io/en/latest/storages.html#sqlalchemy) and change the privacy statement.
 - Adding extra security [https://flask-security.readthedocs.io/en/stable/quickstart.html#basic-flask-sqlalchemy-application](https://flask-security.readthedocs.io/en/stable/quickstart.html#basic-flask-sqlalchemy-application)
 - Testing. There are no tests in this code.
+
+## Your Development
+
+
+
+
 
 ## Codespaces Setup
 
