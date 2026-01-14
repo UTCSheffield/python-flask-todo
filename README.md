@@ -18,22 +18,27 @@
 - Ready for Render deployment
 - GitHub Actions CI/CD
 -->
+
 ### Flask
-   - Webserver with routing (a function for each url endpoint)
-   - Jinja templates for looping though and outputting data.
-   - todo.py contains the endpoints for the Todo app
+
+- Webserver with routing (a function for each url endpoint)
+- Jinja templates for looping though and outputting data.
+- todo.py contains the endpoints for the Todo app
 
 ### SQLAlchemy & SQLite / PostgreSQL
-   - SQL Database 
-   - Managed by SQLAlchemy an Object Relationship Manager which allows you to write classes that define the data and provides the storage & CRUD for you.
-   - ORMs build the database for you from your classes, start with SQLite but you can move PostgreSQL or others when you are ready.
-   - todo.py includes the Todo class that provdes all you need for the building of the database and all the CRUD. 
+
+- SQL Database 
+- Managed by SQLAlchemy an Object Relationship Manager which allows you to write classes that define the data and provides the storage & CRUD for you.
+- ORMs build the database for you from your classes, start with SQLite but you can move PostgreSQL or others when you are ready.
+- todo.py includes the Todo class that provdes all you need for the building of the database and all the CRUD. 
 
 ### Authentication (GitHub + Auth0)
-  - GitHub OAuth (Flask-Dance) for local Windows development
-  - Auth0 OAuth for Codespaces and Render production
+
+- GitHub OAuth (Flask-Dance) for local Windows development
+- Auth0 OAuth for Codespaces and Render production
 
 ### Render & Github Actions
+
 - Ready for Render deployment
 - GitHub Actions CI/CD
 
@@ -42,12 +47,14 @@
 ### Clone the Repository
 
 **Using Git Command Line:**
+
 ```bash
 git clone https://github.com/stretchyboy/python-todo.git
 cd python-todo
 ```
 
 **Using GitHub Desktop:**
+
 1. Open GitHub Desktop
 2. Click `File` → `Clone repository`
 3. Select the `URL` tab
@@ -71,12 +78,11 @@ cp .env.example .env
 
 Open `.env.example` and save as `.env`
 
-
 ## Environment Configuration (.env)
 
 Create a `.env` file in the root directory with the following variables:
 
-```
+```bash
 APP_SECRET_KEY=your-secret-key-here
 GITHUB_CLIENT_ID=your-github-client-id
 GITHUB_CLIENT_SECRET=your-github-client-secret
@@ -129,7 +135,7 @@ For local Windows development with GitHub Desktop:
 Start the Flask development server:
 
 ```bash
-python -m flask run
+py -m flask run --host=localhost --port=5000  #it maybe python3 on your machine
 ```
 
 The app will be available at [http://localhost:5000](http://localhost:5000)
@@ -163,4 +169,3 @@ See [CODESPACES_SETUP.md](CODESPACES_SETUP.md) for complete GitHub Codespaces se
 ## Deployment on Render
 
 See [RENDER_SETUP.md](RENDER_SETUP.md) for complete Render deployment instructions, including setup, configuration, environment variables, and continuous deployment.
-
