@@ -17,7 +17,7 @@ SITE = {
 }
 
 app = Flask(__name__)
-app.secret_key = os.getenv("APP_SECRET_KEY", "supersecret")
+app.secret_key = os.environ.get("APP_SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL',
                                                   'sqlite:///todo.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -46,6 +46,21 @@ else:
     auth0_callback_url = os.environ.get('AUTH0_CALLBACK_URL', 'http://localhost:5000/callback')
 
 app.config['AUTH0_CALLBACK_URL'] = auth0_callback_url
+
+# Set redirect_uri based on environment
+if os.getenv('CODESPACE_NAME'):
+    # Running in GitHub Codespaces
+    redirect_uri = f"https://{os.getenv('CODESPACE_NAME')}-5000.{os.getenv('GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN')}/callback"
+elif os.getenv('RENDER'):
+    # Running on Render - use RENDER_EXTERNAL_URL which is set at runtime
+    render_url = os.getenv('RENDER_EXTERNAL_URL', '')
+    if render_url:
+        redirect_uri = f"{render_url}/callback"
+    else:
+        redirect_uri = None  # Will fall back to default
+else:
+    # Local development
+    redirect_uri = "http://localhost:5000/callback"
 
 # Use auth0_callback_url in your Auth0 configuration
 

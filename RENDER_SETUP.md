@@ -59,26 +59,19 @@ Ensure your repository contains:
    - Click "Apply"
 
 ## Step 3: Configure Environment Variables
-
-After the blueprint is created, you need to add your environment variables:
-
-1. **Navigate to Your Web Service**
-   - In the Render dashboard, click on your web service
-   - Go to the "Environment" tab
-
-2. **Add Environment Variables**
-   - Click "Add Environment Variable"
-   - Add each variable:
-     ```
-     APP_SECRET_KEY=<generate-new-secret-key>
-     AUTH0_DOMAIN=<your-auth0-domain>.auth0.com
-     AUTH0_CLIENT_ID=<your-auth0-client-id>
-     AUTH0_CLIENT_SECRET=<your-auth0-client-secret>
-     AUTH0_CALLBACK_URL=https://<your-app-name>.onrender.com/callback
-     ```
-   - **Important**: Generate a NEW `APP_SECRET_KEY` for production (don't reuse your local one)
-   - **Note**: Do NOT set `OAUTHLIB_INSECURE_TRANSPORT` in production
-   - Click "Save Changes"
+   
+   Add these in Render Dashboard → Environment:
+   
+   ```
+   AUTH0_CLIENT_ID=your_client_id
+   AUTH0_CLIENT_SECRET=your_client_secret
+   AUTH0_DOMAIN=your_auth0_domain
+   APP_SECRET_KEY=your_secret_key
+   ```
+   
+   **Important:** Do NOT set `RENDER_EXTERNAL_HOSTNAME` manually. Render sets this automatically, but it's only available at runtime, not during build.
+   
+   **For Auth0 Configuration:** Use your actual Render app URL (e.g., `https://python-todo.onrender.com`) in Auth0 settings, not the variable name.
 
 3. **Automatic Deployment**
    - Render will automatically build and deploy your application
