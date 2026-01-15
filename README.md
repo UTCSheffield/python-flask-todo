@@ -4,43 +4,37 @@
 ![Flask](https://img.shields.io/badge/Flask-2.3-green)
 ![Render](https://img.shields.io/badge/Deploy-Render-purple)
 
+A simple Python Todo Web App to do some improvments on and be a starting point for your own more apps.
+
+
 ## Features
-<!--
-- Flask + SQLAlchemy ORM
-   - Webserver with SQL Database 
-   - Managed by an Object Relationship Manager which allows you to write classes that define the data
-   - Jinja templates 
-- **Dual Authentication:**
-  - GitHub OAuth (Flask-Dance) for local Windows development
-  - Auth0 OAuth for Codespaces and Render production
-- Automatic provider detection based on environment
-- SQLite (easy to switch to PostgreSQL)
-- Ready for Render deployment
-- GitHub Actions CI/CD
--->
 
 ### Flask
 
-- Webserver with routing (a function for each url endpoint)
-- Jinja templates for looping though and outputting data.
+- [Flask](https://flask.palletsprojects.com/en/stable/) based Python Webserver with routing (a function for each url endpoint users can visit)
+- HTML / [Jinja templates](https://jinja.palletsprojects.com/en/stable/templates/) for looping though and outputting data.
 - todo.py contains the endpoints for the Todo app
 
 ### SQLAlchemy & SQLite / PostgreSQL
 
-- SQL Database 
-- Managed by SQLAlchemy an Object Relationship Manager which allows you to write classes that define the data and provides the storage & CRUD for you.
-- ORMs build the database for you from your classes, start with SQLite but you can move PostgreSQL or others when you are ready.
-- todo.py includes the Todo class that provdes all you need for the building of the database and all the CRUD. 
+- SQL Databases the modern way 
+- Managed by [SQLAlchemy](https://www.sqlalchemy.org/) an ORM /  [Object Relationship Mapper](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) which allows you to write classes that define the data and provides the storage & [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) for you.
+- ORMs build the database for you from your classes so you define what you want to store how it connects together and any extras calculations / functions you need .
+- Start with SQLite but you can move to proffesional systems like PostgreSQL or others when you are ready.
+- todo.py includes the Todo class that provdes all you need for the building of the database and all the [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete). 
 
 ### Authentication (GitHub + Auth0)
+
+Authentication is the act of proving who you are, in this system we use external Authentication systems so we aren't storing usernames & passwords (reducing the DPA responsiblilties )
 
 - GitHub OAuth (Flask-Dance) for local Windows development
 - Auth0 OAuth for Codespaces and Render production
 
 ### Render & Github Actions
 
-- Ready for Render deployment
-- GitHub Actions CI/CD
+- Ready for Render deployment so you can publish and use the site for free (there are some speed limitations)
+- GitHub Actions CI/CD to build the site when you commit a working version
+- Can be upgraded to use a free PostgreSQL daatbase server (but there are some other )
 
 ## Setup
 
@@ -49,8 +43,8 @@
 **Using Git Command Line:**
 
 ```bash
-git clone https://github.com/stretchyboy/python-todo.git
-cd python-todo
+git clone https://github.com/mr-eggleton/python-flask-todo.git
+cd python-flask-todo
 ```
 
 **Using GitHub Desktop:**
@@ -58,7 +52,7 @@ cd python-todo
 1. Open GitHub Desktop
 2. Click `File` → `Clone repository`
 3. Select the `URL` tab
-4. Enter: `https://github.com/stretchyboy/python-todo.git`
+4. Enter: `https://github.com/mr-eggleton/python-flask-todo.git`
 5. Choose a local path and click `Clone`
 
 ### Install Dependencies
@@ -74,30 +68,13 @@ py -m pip install -r requirements.txt
 cp .env.example .env
 ```
 
-### On Windows in VS Code
+#### On Windows in VS Code
 
 Open `.env.example` and save as `.env`
 
 ## Environment Configuration (.env)
 
-Create a `.env` file in the root directory with the following variables:
-
-```bash
-APP_SECRET_KEY=your-secret-key-here
-GITHUB_CLIENT_ID=your-github-client-id
-GITHUB_CLIENT_SECRET=your-github-client-secret
-AUTH0_DOMAIN=your-auth0-domain.auth0.com
-AUTH0_CLIENT_ID=your-auth0-client-id
-AUTH0_CLIENT_SECRET=your-auth0-client-secret
-AUTH0_CALLBACK_URL=http://localhost:5000/callback
-OAUTHLIB_INSECURE_TRANSPORT=1
-```
-
-### Generate APP_SECRET_KEY
-
-```bash
-python -c "import secrets; print(secrets.token_hex(32))"
-```
+Edit the file to put the details you need in. But @ UTC Sheffield OLP, Mr Eggleton will give you a .env file that will work with github, and you don't need to do the "Authentication Setup" and you can skip to ['Running the Application'](#running-the-application)
 
 ## Authentication Setup
 
@@ -152,13 +129,14 @@ The database file is stored in `/instance/todo.db`
 
 - Persistent records in a database. The current database will be destroyed each time you push to render,  ( You can modify the code once it's on Render to move to PostgreSQL ).
 - Changing database structure SQLAlchemy Migrations. Currently we aren't handling changes to the database structure so you need to delete the local .db and start again (render wil do this anyway on a rebuild as mentioned above). They can be handled with Migrations
-- Storing any user data in a database (other than an id from github ). To have users on this system to store any other PII refer to [https://flask-dance.readthedocs.io/en/latest/storages.html#sqlalchemy](https://flask-dance.readthedocs.io/en/latest/storages.html#sqlalchemy) and change the privacy statement.
+- Minimal Autorisation all Authenticated users can do everything on the site.
+- Storing any user data in a database (other than an id from github or Auth0 ). To have users on this system to store any other PII refer to [https://flask-dance.readthedocs.io/en/latest/storages.html#sqlalchemy](https://flask-dance.readthedocs.io/en/latest/storages.html#sqlalchemy) and change the privacy statement.
 - Adding extra security [https://flask-security.readthedocs.io/en/stable/quickstart.html#basic-flask-sqlalchemy-application](https://flask-security.readthedocs.io/en/stable/quickstart.html#basic-flask-sqlalchemy-application)
 - Testing. There are no tests in this code.
 
 ## Your Development
 
-Try [ADDING_CATERGORIES.md](ADDING_CATERGORIES.md) to add one-to-many relationship and Catergories for the tasks.
+Try [ADDING_CATERGORIES.md](ADDING_CATERGORIES.md) to add a one-to-many relationship and Categories for the tasks.
 
 Then what could you make with the same ideas but different entities (things)? 
 

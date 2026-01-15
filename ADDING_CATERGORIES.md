@@ -30,22 +30,10 @@ erDiagram
 
 ## Step 1: Update `todo.py` - Add the Category Model
 
-### 1.1: Add ForeignKey import
-Find this line near the top of `todo.py`:
-```python
-from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass, Mapped, mapped_column
-```
+### 1.1: Add the Category class
+Find the line that says `db = SQLAlchemy(model_class=Base)`.
 
-Change it to:
-```python
-from sqlalchemy.orm import DeclarativeBase, MappedAsDataclass, Mapped, mapped_column
-from sqlalchemy import ForeignKey
-```
-
-### 1.2: Add the Category class
-Find the line that says `todo_bp = Blueprint('todo', __name__)`.
-
-**Just BEFORE** that line, add this new class:
+**Just AFTER** that line, add this new class:
 ```python
 class Category(db.Model):
     __tablename__ = "categories"
@@ -53,15 +41,13 @@ class Category(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, init=False)
     name: Mapped[str] = mapped_column(db.String(50), nullable=False, unique=True)
 
-    def __repr__(self):
+    def __repr__(self): # When you try to print or put this object in a template represent it as it's name
         return self.name
 
 
 ```
 
-**Important:** Make sure to leave a blank line after `pass` and before `todo_bp = Blueprint`.
-
-### 1.3: Update the Todo class
+### 1.2: Update the Todo class
 Find the `Todo` class. It should look like this:
 ```python
 class Todo(db.Model):
@@ -73,7 +59,7 @@ class Todo(db.Model):
     done: Mapped[bool] = mapped_column(db.Boolean, default=False)
 ```
 
-Add a new line after `user_id` to add the category field:
+Add a new line after `user_id` to add the category field. And add a new function / method which will make todo.catergory return the Catergory object that is linked by the catergory_id Foreign Key:
 ```python
 class Todo(db.Model):
     __tablename__ = "todos"
@@ -83,6 +69,10 @@ class Todo(db.Model):
     user_id: Mapped[str] = mapped_column(db.String(100), nullable=False)
     category_id: Mapped[int] = mapped_column(ForeignKey('categories.id'), nullable=False)
     done: Mapped[bool] = mapped_column(db.Boolean, default=False)
+
+    @property # todo.category is a property (member variable) of the todo object
+    def category(self): # return the category object linked to this Todo by category_id
+        return Category.query.get(self.category_id)
 ```
 
 ---
@@ -158,6 +148,11 @@ def init_app(app):
     db.init_app(app)
     with app.app_context():
         db.create_all()
+
+        if Todo.query.count() == 0:
+            mreggleton = Todo(task="Mr Eggleton checking your Todo App!", done=False, user_id="github|5987806")
+            db.session.add(mreggleton)
+            db.session.commit()
 ```
 
 **New code:**
@@ -172,6 +167,11 @@ def init_app(app):
             non_urgent = Category(name="Non-urgent")
             db.session.add(urgent)
             db.session.add(non_urgent)
+            db.session.commit()
+
+        if Todo.query.count() == 0:
+            mreggleton_check = Todo(task="Mr Eggleton checking your Todo App!", done=False, user_id="github|5987806", category_id=non_urgent.id)
+            db.session.add(mreggleton_check)
             db.session.commit()
 ```
 
@@ -201,6 +201,18 @@ Find the form in `index.html`:
     </select>
     <button type="submit">Add</button>
 </form>
+```
+
+Find the task text being printed out and add the 
+
+**Old code:**
+```html
+            {{ todo.task }}
+```
+
+**New code:**
+```html
+            {{ todo.task }} [{{ todo.category }}]
 ```
 
 ---
