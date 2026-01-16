@@ -23,7 +23,7 @@ A simple Python Todo Web App to do some improvements on and be a starting point 
 - SQL Databases the modern way
 - Managed by [SQLAlchemy](https://www.sqlalchemy.org/) an ORM /  [Object Relationship Mapper](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) which allows you to write classes that define the data and provides the storage & [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) for you.
 
---
+---
 ###  [Object Relationship Mapper](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping)
 
 - ORMs build the database for you from your classes so you define what you want to store how it connects together and any extras calculations / functions you need .
@@ -34,7 +34,7 @@ A simple Python Todo Web App to do some improvements on and be a starting point 
 
 ### Authentication (GitHub + Auth0)
 
-Authentication is the act of proving who you are, in this system we use external Authentication systems so we aren't storing usernames & passwords (reducing the DPA responsiblilties )
+Authentication is the act of proving who you are, in this system we use external authentication systems so we aren't storing usernames & passwords (reducing the DPA responsiblilties ). There are still some so we provide a privacy policy.
 
 - GitHub OAuth (Flask-Dance) for local Windows development
 - Auth0 OAuth for Codespaces and Render production
@@ -45,7 +45,7 @@ Authentication is the act of proving who you are, in this system we use external
 
 - Ready for [Render](https://render.com/)  deployment so you can publish and use the site online for free (there are some speed limitations)
 - GitHub Actions CI/CD to build the site when you commit a working version
-- Can be upgraded to use a free PostgreSQL daatbase server (but there are some other )
+- Can be upgraded to use a free PostgreSQL database server (but there are some other steps)
 
 ---
 
@@ -53,28 +53,28 @@ Authentication is the act of proving who you are, in this system we use external
 
 ### Start from the Template
 
-1. Go to the github repository [https://github.com/UTCSheffield/python-flask-todo](https://github.com/UTCSheffield/python-flask-todo)
-2. Click the green "Use this template" button at the top of the page
-3. Select "Create a new repository"
-4. Fill in your new repository details:
+1. Login to [github.com](https://github.com/)
+2. Go to the github repository [https://github.com/UTCSheffield/python-flask-todo](https://github.com/UTCSheffield/python-flask-todo)
+3. Click the green "Use this template" button at the top of the page
+4. Select "Create a new repository"
+5. Fill in your new repository details:
    - Choose a repository name (e.g., `python-flask-todo`)
    - Add a description (optional)
    - Choose Public or Private visibility
-5. Click "Create repository from template"
-6. Your new repository will be created with all the template files
-7. Now clone your new repository using one of the methods below
+6. Click "Create repository from template"
+7. Your new repository will be created with all the template files
 
 ---
 
-### Clone the Repository
+### Clone your Repository locally
 
 **Using GitHub Desktop:**
 
-1. Open GitHub Desktop
-2. Click `File` → `Clone repository`
-3. Select the `URL` tab
-4. Enter: `https://github.com/UTCSheffield/python-flask-todo.git`
-5. Choose a local path and click `Clone`
+1. On the GitHub page for your new repository
+2. Click the green "Code" button
+3. Click "Open with GitHub Desktop"
+4. You may need to login to GitHub Desktop if you haven't already
+5. You may be prompted to choose a local path to clone the repository to
 6. Click 'Open in Visual Studio Code' to open the project in VS Code
 
 ---
@@ -91,16 +91,16 @@ cd python-flask-todo
 ### Install Dependencies
 
 ```bash
-py -m pip install -r requirements.txt # You'll need python3 ... in linux
+python3 -m pip install -r requirements.txt
 ```
 
 ---
 
 ### Environment Configuration (.env)
 
-In VS Code open `.env.example` and save it as `.env`
-
-Edit the file to put the details you need in. But @ UTC Sheffield OLP, Mr Eggleton will give you a .env file that will work with github, and you don't need to do the "Authentication Setup" as you are using his and you can skip to ['Running the Application'](#running-the-application)
+```bash
+cp .env.example .env
+```
 
 ---
 
@@ -144,10 +144,12 @@ For local Windows development with GitHub Desktop:
 Start the Flask development server:
 
 ```bash
-py -m flask run --host=localhost --port=5000  # it maybe python3 on your machine
+python3 -m flask run --host=localhost --port=5000
 ```
 
 The app will be available at [http://localhost:5000](http://localhost:5000)
+
+Try it, login and create a few tasks!
 
 ---
 
@@ -159,6 +161,10 @@ This code uses [SQLAlchemy](https://www.sqlalchemy.org/) to set up classes that 
 
 The database file is stored in `/instance/todo.db`
 
+Hopefully Visual Code has promoted you to install the recommended extensions including the SQLite extension. and so todo.db should appear in the left hand side explorer view with a red icon.
+
+Have a look, can you see the tables and data?
+
 ---
 
 ## Things we are ignoring
@@ -168,7 +174,7 @@ The database file is stored in `/instance/todo.db`
 - Minimal Autorisation all Authenticated users can do everything on the site.
 - Storing any user data in a database (other than an id from github or Auth0 ). To have users on this system to store any other PII refer to [https://flask-dance.readthedocs.io/en/latest/storages.html#sqlalchemy](https://flask-dance.readthedocs.io/en/latest/storages.html#sqlalchemy) and change the privacy statement.
 - Adding extra security [https://flask-security.readthedocs.io/en/stable/quickstart.html#basic-flask-sqlalchemy-application](https://flask-security.readthedocs.io/en/stable/quickstart.html#basic-flask-sqlalchemy-application)
-- Testing. There are no tests in this code, although Flask, SQL Alchemy and the other libraries used are thouroughly tested and are checked for security issues.
+- Testing. There are no tests in this code, although Flask, SQL Alchemy and the other libraries used are thoroughly tested and are checked for security issues.
 
 ---
 
@@ -182,10 +188,12 @@ Books and People could make a library etc ....
 
 ---
 
-## Codespaces Setup
-
-See [CODESPACES_SETUP.md](CODESPACES_SETUP.md) for complete GitHub Codespaces setup instructions.
 
 ## Deployment on Render
 
 See [RENDER_SETUP.md](RENDER_SETUP.md) for complete Render deployment instructions, including setup, configuration, environment variables, and continuous deployment.
+
+
+## Codespaces Setup
+
+See [CODESPACES_SETUP.md](CODESPACES_SETUP.md) for complete GitHub Codespaces setup instructions.

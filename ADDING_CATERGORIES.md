@@ -8,6 +8,8 @@ We're adding a **category system** to organize todos. Each todo must belong to o
 
 The system uses two database tables with a **one-to-many relationship**: one category can have many todos, but each todo belongs to exactly one category.
 
+---
+
 ```mermaid
 erDiagram
     Category ||--o{ Todo : "has many"
@@ -31,9 +33,11 @@ erDiagram
 ## Step 1: Update `todo.py` - Add the Category Model
 
 ### 1.1: Add the Category class
+
 Find the line that says `db = SQLAlchemy(model_class=Base)`.
 
 **Just AFTER** that line, add this new class:
+
 ```python
 class Category(db.Model):
     __tablename__ = "categories"
@@ -48,7 +52,9 @@ class Category(db.Model):
 ```
 
 ### 1.2: Update the Todo class
+
 Find the `Todo` class. It should look like this:
+
 ```python
 class Todo(db.Model):
     __tablename__ = "todos"
@@ -59,7 +65,8 @@ class Todo(db.Model):
     done: Mapped[bool] = mapped_column(db.Boolean, default=False)
 ```
 
-Add a new line after `user_id` to add the category field. And add a new function / method which will make todo.catergory return the Catergory object that is linked by the catergory_id Foreign Key:
+Add a new line after `user_id` to add the category field. And add a new function / method which will make todo.category return the Category object that is linked by the category_id Foreign Key:
+
 ```python
 class Todo(db.Model):
     __tablename__ = "todos"
@@ -80,9 +87,11 @@ class Todo(db.Model):
 ## Step 2: Update Routes in `todo.py`
 
 ### 2.1: Update the home() function
+
 Find the `home()` function and change it to pass categories to the template:
 
 **Old code:**
+
 ```python
 @todo_bp.route('/')
 def home():
@@ -95,6 +104,7 @@ def home():
 ```
 
 **New code:**
+
 ```python
 @todo_bp.route('/')
 def home():
@@ -108,9 +118,11 @@ def home():
 ```
 
 ### 2.2: Update the add() function
+
 Find the `add()` function and change it to capture the category:
 
 **Old code:**
+
 ```python
 @todo_bp.route('/add', methods=['POST'])
 def add():
@@ -124,6 +136,7 @@ def add():
 ```
 
 **New code:**
+
 ```python
 @todo_bp.route('/add', methods=['POST'])
 def add():
@@ -140,9 +153,11 @@ def add():
 ```
 
 ### 2.3: Update the init_app() function
+
 Find the `init_app()` function at the bottom of `todo.py`. Add code to seed the initial categories:
 
 **Old code:**
+
 ```python
 def init_app(app):
     db.init_app(app)
@@ -156,6 +171,7 @@ def init_app(app):
 ```
 
 **New code:**
+
 ```python
 def init_app(app):
     db.init_app(app)
@@ -182,6 +198,7 @@ def init_app(app):
 Find the form in `index.html`:
 
 **Old code:**
+
 ```html
 <form method="POST" action="/add">
     <input type="text" name="task" placeholder="Enter task" required>
@@ -190,6 +207,7 @@ Find the form in `index.html`:
 ```
 
 **New code:**
+
 ```html
 <form method="POST" action="/add">
     <input type="text" name="task" placeholder="Enter task" required>
@@ -203,14 +221,16 @@ Find the form in `index.html`:
 </form>
 ```
 
-Find the task text being printed out and add the 
+Find the task text being printed out and add the category next to it:
 
 **Old code:**
+
 ```html
             {{ todo.task }}
 ```
 
 **New code:**
+
 ```html
             {{ todo.task }} [{{ todo.category }}]
 ```
@@ -220,23 +240,27 @@ Find the task text being printed out and add the
 ## Step 4: Update `app.py` - Import Category
 
 Find this line near the top of `app.py`:
+
 ```python
 from todo import todo_bp, init_app as init_todo 
 from todo import db, Todo
 ```
 
 Change it to:
+
 ```python
 from todo import todo_bp, init_app as init_todo 
 from todo import db, Todo, Category
 ```
 
 Then find this line near the bottom:
+
 ```python
 init_admin(app, db, Todo)
 ```
 
 Change it to:
+
 ```python
 init_admin(app, db, Todo, Category)
 ```
@@ -248,6 +272,7 @@ init_admin(app, db, Todo, Category)
 Find the `init_admin()` function in `admin.py`:
 
 **Old code:**
+
 ```python
 def init_admin(app, db, model):
     """Attach Babel and register secured admin views for the given model."""
@@ -261,6 +286,7 @@ def init_admin(app, db, model):
 ```
 
 **New code:**
+
 ```python
 def init_admin(app, db, todo_model, category_model):
     """Attach Babel and register secured admin views for the given models."""
@@ -283,12 +309,12 @@ def init_admin(app, db, todo_model, category_model):
 Because you've changed the database structure, you need to delete the old database:
 
 1. Stop your Flask app if it's running (press Ctrl+C in the terminal)
-2. Delete the database file from teh instance folder.
-   
+2. Delete the database file from the instance folder.
+
 Restart your Flask app:
+
 ```bash
-py -m flask run --host=localhost --port=5000 # it maybe python3 on your machine
-```
+python3 -m flask run --host=localhost --port=5000 
 
 The app will create a new database with the "Urgent" and "Non-urgent" categories automatically.
 
