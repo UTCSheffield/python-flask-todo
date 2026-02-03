@@ -332,9 +332,9 @@ def add():
 
 ### 2.3: Update the init_app() function
 
-Find the `init_app()` function at the bottom of `todo.py`. Add code to seed the initial categories:
+Find `init_app()` at the bottom of `todo.py`. 
 
-**New code:**
+**New code:** to seed the initial categories.
 
 ```python
 def init_app(app):
@@ -462,7 +462,7 @@ init_admin(app, db, Todo, Category)
 
 Because you've changed the database structure, you need to delete the old database:
 
-1. Stop your Flask app if it's running (press Ctrl+C in the terminal)
+1. Stop your Flask app (press Ctrl+C in the terminal)
 2. Delete the database file from the instance folder.
 
 Restart your Flask app:
@@ -471,7 +471,7 @@ Restart your Flask app:
 py -m flask run --host=localhost --port=5000 # it maybe python3 on your machine
 ```
 
-The app will create a new database with the "Urgent" and "Non-urgent" categories automatically. Test it on [http://localhost:5000/](http://localhost:5000/)
+This will create a new database with the "Urgent" and "Non-urgent" categories. Test it on [http://localhost:5000/](http://localhost:5000/)
 
 ---
 
