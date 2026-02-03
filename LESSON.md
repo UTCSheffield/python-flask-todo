@@ -1,4 +1,3 @@
-
 # Python as Dynamic Web Server
 
 ---
@@ -34,6 +33,7 @@ mindmap
 ```
 
 ---
+
 ## Flask Todo App Starter
 
 A simple Python Todo Web App to do some improvements on and be a starting point for your own simple web apps.
@@ -81,7 +81,7 @@ class Todo(db.Model):
 
 ---
 
-###  Flask Snippet
+### Flask Snippet
 
 ```python
 @todo_bp.route('/')
@@ -122,21 +122,19 @@ Authentication is the act of proving who you are, in this system we use external
 
 ## Setup
 
+---
 ### Start from the Template
 
 1. Login to [github.com](https://github.com/)
 2. Go to the github repository [https://github.com/UTCSheffield/python-flask-todo](https://github.com/UTCSheffield/python-flask-todo)
-3. Click the green "Use this template" button at the top of the page
-4. Select "Create a new repository"
-5. Fill in your new repository details:
-   - Choose a repository name (e.g., `python-flask-todo`)
-   - Add a description (optional)
-   - Choose Public or Private visibility
+3. Click the green "Use this template" button (top right)
+4. Select "Create a new repository" and set the details:
+   - Choose a repository name and a description.
+   - Choose Private visibility if this is to be used for assessment.
 6. Click "Create repository from template"
-7. Your new repository will be created with all the template files
+7. Your new repository will be created
 
 ---
-
 ### Clone your Repository locally
 
 **Using GitHub Desktop:**
@@ -152,11 +150,14 @@ Authentication is the act of proving who you are, in this system we use external
 
 ## Top Tip
 
-Split screen with the browser with README or LESSON open on one side and VS Code on the other.
+Open LESSON.md and then click the preview button (top right) to open it on
+the right hand one side. You can then keep using the editor on the left.
 
 ---
 
 ### Install Dependencies
+
+Open a new terminal in Visual Studio Code
 
 ```bash
 py -m pip install -r requirements.txt # You'll need python3 ... in linux
@@ -166,7 +167,7 @@ py -m pip install -r requirements.txt # You'll need python3 ... in linux
 
 ### Environment Configuration (.env)
 
-In VS Code open `.env.example` and save it as `.env` 
+In VS Code open `.env.example` and save it as `.env`
 
 ![[SaveAs.png]]
 
@@ -236,6 +237,8 @@ erDiagram
 
 ## Step 1: Update `todo.py` - Add the Category Model
 
+---
+
 ### 1.1: Add the Category class
 
 Find the line that says `db = SQLAlchemy(model_class=Base)`.
@@ -281,6 +284,8 @@ class Todo(db.Model):
 ---
 
 ## Step 2: Update Routes in `todo.py`
+
+---
 
 ### 2.1: Update the home() function
 
@@ -352,7 +357,10 @@ def init_app(app):
 
 ---
 
-## Step 3: Update `templates/index.html` - Add Category Dropdown
+## Step 3: Update `templates/index.html`
+
+---
+### 3.1: Add Category Dropdown
 
 Find the form in `index.html`:
 
@@ -373,6 +381,8 @@ Find the form in `index.html`:
 
 ---
 
+### 3.2: Add Category Output
+
 Find the task text being printed out and add the category next to it:
 
 **New code:**
@@ -383,39 +393,11 @@ Find the task text being printed out and add the category next to it:
 
 ---
 
-## Step 4: Update `app.py` - Import Category
-
-Find this line near the top of `app.py`:
-
-```python
-from todo import todo_bp, init_app as init_todo 
-from todo import db, Todo
-```
-
-Change it to:
-
-```python
-from todo import todo_bp, init_app as init_todo 
-from todo import db, Todo, Category
-```
+## Step 4: Update `admin.py` 
 
 ---
 
-Then find this line near the bottom:
-
-```python
-init_admin(app, db, Todo)
-```
-
-Change it to:
-
-```python
-init_admin(app, db, Todo, Category)
-```
-
----
-
-## Step 5: Update `admin.py` - Add Category Admin View
+### 4.1: Add Category Admin View
 
 Find the `init_admin()` function in `admin.py`:
 
@@ -434,6 +416,44 @@ def init_admin(app, db, todo_model, category_model):
                                           endpoint="category_admin",
                                           name="Categories"))
     return admin
+```
+
+---
+
+## Step 5: Update `app.py`
+
+---
+
+### 5.1 Import Category
+
+Find this line near the top of `app.py`:
+
+```python
+from todo import todo_bp, init_app as init_todo 
+from todo import db, Todo
+```
+
+Change it to:
+
+```python
+from todo import todo_bp, init_app as init_todo 
+from todo import db, Todo, Category
+```
+
+---
+
+### 5.2 Add category to the init_admin call
+
+Then find this line near the bottom:
+
+```python
+init_admin(app, db, Todo)
+```
+
+Change it to:
+
+```python
+init_admin(app, db, Todo, Category)
 ```
 
 ---
@@ -467,9 +487,11 @@ The app will create a new database with the "Urgent" and "Non-urgent" categories
 
 1. Stop your Flask app if it's running (press Ctrl+C in the terminal)
 
-### Step 7: Update `app.py` - 
+---
 
-Find the imports at the top, the last one should be 
+### Step 7: Update `app.py`
+
+Find the imports at the top, the last one should be
 `from admin import init_admin` add the following line
 
 ```python
@@ -482,7 +504,24 @@ And just after `app.register_blueprint(todo_bp)` add
 app.register_blueprint(api_bp)
 ```
 
---- 
+--
+
+#### Fix for missing library
+
+If you hit an issue check this line is in the requirements.txt
+```txt
+flask_restx==1.3.0
+```
+
+And Install Dependencies
+
+Open a new terminal in Visual Studio Code
+
+```bash
+py -m pip install -r requirements.txt # You'll need python3 ... in linux
+```
+
+---
 
 Restart your Flask app:
 
@@ -527,3 +566,5 @@ api documentation and a testing environment
 Then what could you make with the same ideas but different entities (things)?
 
 Books and People could make a library etc ....
+
+[Design a Web App - Lesson](DESIGN_A_WEB_APP.md)
